@@ -21,11 +21,25 @@ const VideoContainer = () => {
     fetchVideos();
   }, []);
 
+  // if (!videos) {
+  //   return <div>No video to show , api qouta expired :-( </div>;
+  // }
+
+  // return (
+  //   <div>
+  //     {videos.length === 0 ? (
+  //       <div>No videos to show, API key expired</div>
+  //     ) : (
+  //       <div>hlo</div>
+  //     )}
+  //   </div>
+  // );
+
   return (
     <div className="flex flex-wrap justify-center ">
-      {videos.map((video) => (
-        <Link to={"/watch?v=" + video.id}>
-          <VideoCard key={video.id} info={video} />
+      {videos.map((video, index) => (
+        <Link to={"/watch?v=" + video.id} key={video.id}>
+          <VideoCard info={video} />
         </Link>
       ))}
     </div>

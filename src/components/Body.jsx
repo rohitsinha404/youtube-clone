@@ -7,8 +7,9 @@ import SearchPage from "./SearchPage";
 const Body = () => {
   return (
     <div className="flex    ">
-      <SideBar />
-      <Outlet />
+      this is body
+      {/* <SideBar /> */}
+      {/* <Outlet /> */}
       {/* <SearchPage /> */}
     </div>
   );

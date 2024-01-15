@@ -7,6 +7,7 @@ const searchSlice = createSlice({
     cacheResult: (state, action) => {
       state = Object.assign(state, action.payload);
     },
+    
   },
 });
 
@@ -15,3 +16,5 @@ export const { cacheResult } = searchSlice.actions;
 export default searchSlice.reducer;
 
 // #TODO --> create a LRU or similar Cache , so that it dont blows away the system
+
+

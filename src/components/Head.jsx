@@ -14,6 +14,7 @@ const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const navigate = useNavigate();
 
   const searchCache = useSelector((store) => store.search);
   useEffect(() => {
@@ -51,6 +52,12 @@ const Head = () => {
     dispatch(toggleMenu());
   }
 
+  function searchHandler() {
+    navigate("/results" + "?searchQuery=" + searchQuery);
+    console.log("aya idhar");
+    window.location.reload(true);
+  }
+
   return (
     <div className="grid grid-flow-col shadow-xl p-4 items-center  ">
       <div className=" col-span-1  flex gap-1 ">
@@ -66,7 +73,12 @@ const Head = () => {
       </div>
 
       <div className="col-span-10 mx-auto    ">
-        <div className="flex">
+        <form
+          className="flex"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <input
             type="text"
             placeholder="Search"
@@ -77,10 +89,14 @@ const Head = () => {
             onBlur={() => setShowSuggestion(false)}
           />
 
-          <button className=" border p-3 rounded-tr-3xl rounded-br-3xl bg-slate-100 pl-6  ">
+          <button
+            type="submit"
+            className=" border p-3 rounded-tr-3xl rounded-br-3xl bg-slate-100 pl-6  "
+            onClick={searchHandler}
+          >
             <GoSearch className="text-2xl " />
           </button>
-        </div>
+        </form>
 
         {/* search suggestions  */}
         {showSuggestion && (
