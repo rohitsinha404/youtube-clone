@@ -10,7 +10,6 @@ import Head from "./components/Head";
 import WatchPage from "./components/WatchPage";
 import MainConatiner from "./components/MainConatiner";
 import SearchPage from "./components/SearchPage";
-import SideBar from "./components/SideBar";
 
 const appRouter = createBrowserRouter([
   {
@@ -45,14 +44,6 @@ function App() {
        
         */}
       <Head />
-      <SideBar />
-      {/* 
-      
-         search page 
-         main container 
-         watch page
-      
-       */}
       <RouterProvider router={appRouter} />
     </div>
   );
