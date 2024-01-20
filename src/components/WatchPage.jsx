@@ -5,6 +5,10 @@ import { useSearchParams } from "react-router-dom";
 import CommentsContainer from "./CommentsContainer";
 import LiveChat from "./LiveChat";
 import { META_DATA_API } from "../utils/constanst";
+import Suggestions from "./Suggestions";
+
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const WatchPage = () => {
   const dispatch = useDispatch();
@@ -122,7 +126,7 @@ const WatchPage = () => {
         META_DATA_API + params + "&key=" + process.env.REACT_APP_GOOGLE_API_KEY
       );
       const data = await res.json();
-      // console.log("data", data);
+
       setMetaData(data);
       setmetaDatav2({
         title: data.items[0].snippet.title,
@@ -130,50 +134,69 @@ const WatchPage = () => {
         viewCount: data.items[0].statistics.viewCount,
         isLive: data.items[0].snippet.liveBroadcastContent,
       });
-      console.log("this is resp", data);
     } catch (e) {
       console.error(e);
     }
-    // setLoading(true);
-    // console.log("videoMetaData", videoMetaData.items[0].snippet.channelTitle);
   }
 
-  // const title = "title hai bhai ye video ka ";
+  // trial
 
+  //trial
+  // useEffect(() => {
+  //   setWidht(window.innerWidth * 0.9);
+  // }, []);
 
-  
+  const [width, setWidht] = useState(Math.min(949, window.innerWidth * 0.97));
+  const [height, setHeight] = useState(Math.min(534, window.innerWidth * 0.8));
 
   return (
-    <div className="flex flex-col ">
-      <div className=" flex gap-3   ">
-        <div>
-          <iframe
-            className="rounded-2xl my-3 ml-10 "
-            width="949"
-            height="534"
-            src={"https://www.youtube.com/embed/" + params + "?&autoplay=1"}
-            title="YouTube video player"
-            autoPlay="true"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
+    <div className=" flex ">
+      <div className="flex flex-col ">
+        <div className=" flex    ">
+          <div className="">
+            <iframe
+              className="rounded-2xl sm:my-3 sm:ml-10 "
+              maxWidht={"100vw"}
+              width={width}
+              height={height}
+              src={"https://www.youtube.com/embed/" + params + "?&autoplay=1"}
+              title="YouTube video player"
+              autoPlay="true"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
 
-          <div className="w-[949px]  ml-12 ">
-            <span className="font-semibold text-3xl  ">{metaDatav2.title}</span>
-            <br></br>
-            <span>{metaDatav2.channelName}</span>
-            <br></br>
-            <span>{metaDatav2.viewCount} views</span>
+            <div className={`w-[${width}]  sm:ml-12  p-2   mr-1`}>
+              <span className="font-semibold text-2xl  ">
+                {metaDatav2.title || <Skeleton count={2} />}
+              </span>
+              <br></br>
+              <span>{metaDatav2.channelName || <Skeleton />}</span>
+              <br></br>
+              <span>{metaDatav2.viewCount || <Skeleton />} views</span>
+            </div>
+          </div>
+
+          <div className="flex items-center  w-[30rem] mt-[-4rem] ">
+            {metaDatav2.isLive == "live" ? <LiveChat /> : <div></div>}
           </div>
         </div>
 
-        <div className="flex items-center  w-[30rem]">
-          {metaDatav2.isLive == "live" ? <LiveChat /> : <div></div>}
+        <div className="flex ">
+          {metaDatav2.isLive == "none" ? <CommentsContainer /> : <div></div>}
         </div>
       </div>
-
-      {metaDatav2.isLive == "none" ? <CommentsContainer /> : <div></div>}
+      {metaDatav2.isLive == "none" && (
+        <div className="ml-[-30rem] ">
+          <Suggestions />
+        </div>
+      )}
+      {metaDatav2.isLive == "live" && (
+        <div className="ml-[-30rem] mt-[40rem]">
+          <Suggestions />
+        </div>
+      )}
     </div>
   );
 };

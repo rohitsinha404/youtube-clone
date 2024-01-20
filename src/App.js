@@ -3,6 +3,7 @@ import {
   RouterProvider,
   Routes,
   createBrowserRouter,
+  useLoaderData,
 } from "react-router-dom";
 import "./App.css";
 import Body from "./components/Body";
@@ -11,31 +12,14 @@ import WatchPage from "./components/WatchPage";
 import MainConatiner from "./components/MainConatiner";
 import SearchPage from "./components/SearchPage";
 import SideBar from "./components/SideBar";
+import { useState } from "react";
+import { IoLogoClosedCaptioning } from "react-icons/io";
 
-// const appRouter = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Body />,
-//     children: [
-//       {
-//         path: "/",
-//         element: <MainConatiner />,
-//       },
-//       {
-//         path: "/watch",
-//         element: <WatchPage />,
-//       },
-//       {
-//         path: "/results",
-//         element: <SearchPage />,
-//       },
-//     ],
-//   },
-// ]);
+// const [loading, setLoading] = useState(false);
 
 function App() {
   return (
-    <div>
+    <div className="bg-[#0f0f0f] text-white  max-w-[100vw]  overflow-hidden ">
       {/* 
        
          Head
@@ -49,16 +33,28 @@ function App() {
        
         */}
       <Head />
-      <div className="flex">
-        <SideBar />
 
-        <Routes>
-          <Route path={"/abc"} element={<h1>Trial hai </h1>} />
-          <Route path={"/"} element={<MainConatiner />} />
-          <Route path={"/watch"} element={<WatchPage />} />
-          <Route path={"/results"} element={<SearchPage />} />
-          <Route path={"*"} element={<h1>Looks Like youre lost ..... </h1>} />
-        </Routes>
+      <div className="flex ">
+        <div className="   ">
+          <SideBar />
+        </div>
+
+        <div className="   ">
+          <Routes>
+            <Route path={"/"} element={<MainConatiner />} />
+            <Route path={"/watch"} element={<WatchPage />} />
+
+            <Route
+              path={"/results"}
+              element={
+                <div className="sm:ml-[15rem] ">
+                  <SearchPage />
+                </div>
+              }
+            />
+            <Route path={"*"} element={<h1>Looks Like youre lost ..... </h1>} />
+          </Routes>
+        </div>
       </div>
     </div>
   );

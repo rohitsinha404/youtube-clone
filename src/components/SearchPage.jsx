@@ -12,12 +12,18 @@ const SearchPage = () => {
   const params = searchParams.get("searchQuery");
 
   async function fetchVideos() {
-    const res = await fetch(
-      SEARCHBOX_API + params + "&key=" + process.env.REACT_APP_GOOGLE_API_KEY
-    );
-    const data = await res.json();
-    setVideos(data.items);
-    console.log("api called with " + params);
+    try {
+      const res = await fetch(
+        SEARCHBOX_API + params + "&key=" + process.env.REACT_APP_GOOGLE_API_KEY
+      );
+      const data = await res.json();
+
+      setVideos(data.items);
+      console.log(data.items);
+      console.log("api called with " + params);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   useEffect(() => {
@@ -28,19 +34,30 @@ const SearchPage = () => {
   //   return <div>No video to show , api qouta expired :-( </div>;
   // }
 
+  // if(e.id.kind !=="youtube#video" ) return ()
+
   return (
-    <div>
-      <div className="flex flex-col gap-3 w-[80%] ml-3 ">
-        {videos.map((e) => (
-          <Link to={"/watch?v=" + e.id.videoId} key={e.id.videoId}>
-            <SearchVideoCard
-              imgSrc={e.snippet.thumbnails.medium.url}
-              title={e.snippet.title}
-              channelName={e.snippet.channelTitle}
-            />
-          </Link>
-        ))}
-      </div>
+    <div className="item-end">
+      {videos && videos.length > 0 ? (
+        <div className="flex flex-col gap-3 w-[80%] ml-3    ">
+          {videos.map((e) => {
+            if (e.id.kind !== "youtube#video") return <></>;
+            else
+              return (
+                <Link to={"/watch?v=" + e.id.videoId} key={e.id.videoId}>
+                  <SearchVideoCard
+                    imgSrc={e.snippet.thumbnails.medium.url}
+                    title={e.snippet.title}
+                    channelName={e.snippet.channelTitle}
+                    isLive={e.snippet.liveBroadcastContent=="live"}
+                  />
+                </Link>
+              );
+          })}
+        </div>
+      ) : (
+        <h1>ERROR ERROR </h1>
+      )}
     </div>
   );
 };

@@ -35,8 +35,8 @@ const LiveChat = () => {
   }
 
   return (
-    <div>
-      <div className=" rounded-2xl w-full h-[534px] ml-2 p-2  bg-gray-100 overflow-y-scroll flex flex-col-reverse ">
+    <div className="ml-[-2rem]">
+      <div className=" rounded-2xl w-full h-[534px] ml-2 p-2  bg-[#222] overflow-y-scroll flex flex-col-reverse no-scrollbar ">
         {chatMessages.map((msg, index) => (
           <ChatMessage key={index} name={msg.name} message={msg.message} />
         ))}
@@ -48,7 +48,7 @@ const LiveChat = () => {
           placeholder="comment"
           value={userMsg}
           onChange={(event) => setUserMsg(event.target.value)}
-          className="w-[90%] ml-2 px-3 py-4 bg-gray-100  rounded-3xl font-semibold focus:bg-gray-200 "
+          className="w-[90%] ml-2 px-3 py-4 bg-[#222]  rounded-3xl font-semibold focus:bg-[#292929] "
         />
         <button
           className=" hover:bg-slate-200   font-bold  rounded-3xl  w-[10%]  px-3 py-4 items-center text-2xl "

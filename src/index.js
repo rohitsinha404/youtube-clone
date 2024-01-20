@@ -6,15 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./utils/store";
 import { BrowserRouter } from "react-router-dom";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    {/* <React.StrictMode> */}
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-    {/* </React.StrictMode> */}
+    <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </SkeletonTheme>
   </Provider>
 );
 
