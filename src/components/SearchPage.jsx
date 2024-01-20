@@ -49,14 +49,14 @@ const SearchPage = () => {
                     imgSrc={e.snippet.thumbnails.medium.url}
                     title={e.snippet.title}
                     channelName={e.snippet.channelTitle}
-                    isLive={e.snippet.liveBroadcastContent=="live"}
+                    isLive={e.snippet.liveBroadcastContent == "live"}
                   />
                 </Link>
               );
           })}
         </div>
       ) : (
-        <h1>ERROR ERROR </h1>
+        <h1>LOADING ....... </h1>
       )}
     </div>
   );
